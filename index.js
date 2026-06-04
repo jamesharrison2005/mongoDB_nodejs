@@ -1,3 +1,4 @@
+require ('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -7,9 +8,11 @@ const PORT = 3000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.status(200).send({message: 'helloo'})
-})
+mongoose.connect(process.env.MONGO_URI).then(() => console.log("Database connected"));
+
+app.use('/cats'. catRoutes);
+
+
 
 app.listen(
     PORT, () => console.log(`server is listening on http://localhost:${PORT}`)
