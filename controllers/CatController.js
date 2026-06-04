@@ -10,6 +10,18 @@ exports.createCat = async (req, res) => {
     res.status(201).json(newCat);
 };
 
+exports.getCatById = async (req, res) => {
+    try {
+        const cat = await Cat.findById(req.params.id);
+        if (!cat) {
+            return res.status(404).send({ message: "Cat not found" });
+        }
+        res.json(cat);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
 exports.deleteCat = async (req, res) => {
     try{
         const deletedCat = await Cat.findByIdAndDelete(req.params.id);
