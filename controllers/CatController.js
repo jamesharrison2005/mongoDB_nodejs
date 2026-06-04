@@ -1,4 +1,4 @@
-const Cat = requires('../models/Cats');
+const Cat = require('../models/Cats');
 
 exports.getAllCats = async (req, res) => {
     const cats = await Cat.find();
@@ -10,3 +10,12 @@ exports.createCat = async (req, res) => {
     res.status(201).json(newCat);
 };
 
+exports.deleteCat = async (req, res) => {
+    try{
+        const deletedCat = await Cat.findByIdAndDelete(req.params.id);
+        if (!deletedCat){return res.status(404).send({message: "Cat not found"})};
+        res.status(204).send();
+    } catch (err) {
+        res.status(500).send(err);
+    }  
+};
